@@ -19,3 +19,39 @@ mysql安装：
 
 进入mysql: mysql -uroot
 新建mysql账户: CREATE USER 'dog'@'localhost' IDENTIFIED BY '123456'; 
+
+数据库设计：
+表1：入库出库表
+	字段：材质类型，规格，颜色，高度，入库时间，入库数量，出库时间，出库数量
+表2：库存表
+	字段：材质类型，规格，颜色，高度，库存量
+
+-- 建入库出库表	
+create table in_out_storage_log
+(
+	id int unsigned auto_increment,
+	record_user varchar(10) not null, -- 操作员
+	material varchar(10) not null, -- 材质类型
+	spec varchar(10) not null, -- 规格
+	color varchar(10) not null, -- 颜色
+	hight varchar(10) not null, -- 高度
+	in_storage_date datetime not null default now(), -- 入库时间
+	in_storage_num int unsigned not null, -- 入库数量
+	out_storage_date datetime not null default now(), -- 出库时间
+	out_storage_num int not null, -- 出库数量
+	primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8
+;
+
+-- 建库存表
+create table storage_num
+(
+	id int unsigned auto_increment,
+	material varchar(10) not null, -- 材质类型
+	spec varchar(10) not null, -- 规格
+	color varchar(10) not null, -- 颜色
+	hight varchar(10) not null, -- 高度
+	storage_num int not null default 0
+	primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+;
