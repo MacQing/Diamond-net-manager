@@ -9,7 +9,7 @@ config = {
     'host': 'localhost',
     'user': 'root',
     'port': 3306,
-    'database': 'test',
+    'database': 'diamond_net_manager',
     'charset': 'utf8'
 }
 
@@ -29,25 +29,41 @@ class YdqMysql:
         self.cursor.close()
         self.cnn.close()
 
-    def exect_query(self, sql_query):
+    def exect_query(self, sql, params):
         try:
-            self.cursor.execute(sql_query)
+            self.cursor.execute(sql, params)
             return self.cursor.fetchall()
-        except mysql.connector.Error as e:
-            print 'query error!{}'.format(e)
+        except Exception, e:
+            print 'query error! {}'.format(e)
             return None
 
-    def exect_no_query(self, sql_query):
+    def exect_no_query(self, sql, params):
         try:
-            self.cursor.execute(sql_query)
+            self.cursor.execute(sql, params)
             self.cnn.commit()
-        except mysql.connector.Error as e:
-            print 'query error!{}'.format(e)
+            return True
+        except Exception, e:
+            print 'query error! {}'.format(e)
+            return False
+
+    def exect_multi_no_query(self, sql_query_list):
+        try:
+            for sql, params in sql_query_list:
+                self.cursor.execute(sql, params)
+            self.cnn.commit()
+            return True
+        except Exception, e:
+            print 'query error! {}'.format(e)
+            return False
 
 if __name__ == '__main__':
     ydq_mysql = YdqMysql()
-    ydq_mysql.exect_no_query(r"insert into table1 values('2', 'lisi')")
-    ydq_mysql.exect_no_query(r"insert into table2 values('2', '1')")
 
-    for row in ydq_mysql.exect_query(r"select * from table2"):
-        print row[0], row[1]
+    # 检查是否库存充足
+    check_sql_query = r"select storage_num from {} where material='{}' and spec='{}' and color='{}' and hight='{}';".format('storage_num', 'sd',  '12', 'd', '32')
+    check_res = ydq_mysql.exect_query(check_sql_query)
+
+    if check_res:
+        print check_res[0]
+    else:
+        print check_res
