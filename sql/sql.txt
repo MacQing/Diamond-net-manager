@@ -6,7 +6,7 @@ drop table if exists in_out_storage_log, storage_num;
 create table in_out_storage_log
 (
 	id int unsigned auto_increment comment 'id',
-	operation_user varchar(10) not null comment '操作员',
+	operation_user varchar(20) not null comment '操作员',
 	material varchar(10) not null comment '材质类型',
 	spec varchar(10) not null comment '规格',
 	color varchar(10) not null comment '颜色',
@@ -26,7 +26,7 @@ create table storage_num
 	color varchar(10) not null comment '颜色',
 	hight varchar(10) not null comment '高度',
 	storage_num int unsigned not null default 0 comment '存量',
-	update_date datetime not null default now() comment '更新时间',
+	update_date datetime not null comment '更新时间',
 	CONSTRAINT pk_diamond_net_id PRIMARY KEY (material, spec, color, hight)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8
 ;

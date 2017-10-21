@@ -1,0 +1,22 @@
+/**index.wxss**/
+.section {
+  display: flex;
+  padding: 50rpx;
+  flex-direction: row;
+  background-color: beige;
+}
+
+.section_left{
+  align-items: left;
+  width: 150rpx;
+  justify-content: flex-start;
+  background-color: red;
+}
+
+.section_right{
+  align-items: right;
+  text-align: right;
+  width: 550rpx;
+  justify-content: flex-end;
+  background-color:  aqua;
+}

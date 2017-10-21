@@ -1,0 +1,63 @@
+<!--index.wxml-->
+<view class="section">
+  <view class="section_left">材质：</view>
+  <view class="section_right">
+    <picker name="material" value="{{material_index}}" range="{{material_array}}" bindchange="picker_material_change">
+      {{material_array[material_index]}}
+    </picker> 
+  </view>
+</view>
+
+<view class="section">
+  <view class="section_left">颜色：</view>
+  <view class="section_right">
+    <picker name="color" value="{{color_index}}" range="{{color_array}}" bindchange="picker_color_change">
+      {{color_array[color_index]}}
+    </picker> 
+  </view>
+</view>
+
+<view class="section">
+  <view class="section_left">高度：</view>
+  <view class="section_right">
+    <picker name="hight" value="{{hight_index}}" range="{{hight_array}}" bindchange="picker_hight_change">
+      {{hight_array[hight_index]}}
+    </picker> 
+  </view>
+</view>
+
+<view class="section">
+  <view class="section_left">规格：</view>
+  <view class="section_right">
+    <picker name="spec" value="{{spec_index}}" range="{{spec_array}}">
+      {{spec_array[spec_index]}}
+    </picker> 
+  </view>
+</view>
+
+<view class="section">
+  <view class="section_left">数量：</view>
+  <view class="section_right">
+    <input name="num" type="number" placeholder="请输入数量" maxlength="10" bindinput="bindinput_number"/>
+  </view>
+</view>
+
+<view class="section">
+  <view class="section_left">时间：</view>
+  <view class="section_right">
+    <picker mode="date" name="date" value="{{date_now}}" bindchange="picker_date_change">
+      {{date_now}}
+    </picker> 
+  </view>
+</view>
+
+<view class="section">
+  <view class="section_button_in_storage">
+    <button bindtap='bindtap_button_in_storage'>入库</button>
+  </view>
+  <view class="section_button_out_storage">
+    <button bindtap='bindtap_button_out_storage'>出库</button>
+  </view>
+</view>
+
+<view>{{debug_info}}</view>

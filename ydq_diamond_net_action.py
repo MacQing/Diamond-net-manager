@@ -26,10 +26,12 @@ def in_storage(record_user, material, spec, color, hight, in_storage_num, in_sto
     try:
         # 执行sql
         status = ydq_mysql.exect_multi_no_query([(in_storage_log_sql_query, in_storage_log_sql_params), (storage_num_sql, storage_num_params)])
-        return status
+        msg = '入库成功！'
+        return status, msg
     except Exception, e:
         print e.message
-        return False
+        msg = '数据库连接错误！'
+        return False, msg
 
 
 def out_storage(record_user, material, spec, color, hight, out_storage_num, out_storage_date):
@@ -52,11 +54,13 @@ def out_storage(record_user, material, spec, color, hight, out_storage_num, out_
     check_sql_params = (material, spec, color, hight)
     check_res = ydq_mysql.exect_query(check_sql_query, check_sql_params)
     if check_res is None:
-        print '数据库连接错误！'
-        return False
+        msg = '数据库连接错误！'
+        print msg
+        return False, msg
     if not check_res or check_res[0][0] < out_storage_num:
-        print '库存不足！'
-        return False
+        msg = '库存不足！'
+        print msg
+        return False, msg
 
     out_storage_log_sql_query = "insert into in_out_storage_log (operation, operation_user, material, spec, color, hight, operation_num, operation_date) values (%s, %s,%s,%s,%s,%s,%s,%s)"
     out_storage_log_sql_pamrams = (operation, record_user, material, spec, color, hight, out_storage_num, out_storage_date)
@@ -66,10 +70,12 @@ def out_storage(record_user, material, spec, color, hight, out_storage_num, out_
     try:
         # 执行sql
         status = ydq_mysql.exect_multi_no_query([(out_storage_log_sql_query, out_storage_log_sql_pamrams), (storage_num_sql_query, storage_num_sql_params)])
-        return status
+        msg = '入库成功！'
+        return status, msg
     except Exception, e:
         print e.message
-        return False
+        msg = '数据库连接错误！'
+        return False, msg
 
 
 def show_in_out_storage_log(material, spec, color, hight, begin_date, end_date, is_in=True):
@@ -85,10 +91,14 @@ def show_in_out_storage_log(material, spec, color, hight, begin_date, end_date, 
         res = []
         for row in sql_res:
             res.append(dict(material=row[0], spec=row[1], color=row[2], hight=row[3], operation_date=row[4].__str__(), operation_num=row[5], operation_user=row[6]))
-        return res
+
+        msg = '查询成功！'
+        return True, res, msg
     except Exception, e:
         print e.message
-        return None
+
+        msg = '数据库连接错误！'
+        return False, None, msg
 
 
 def show_storage_num_all():
@@ -101,7 +111,11 @@ def show_storage_num_all():
         res = []
         for row in sql_res:
             res.append(dict(material=row[0], spec=row[1], color=row[2], hight=row[3], storage_num=row[4], update_date=row[5].__str__()))
-        return res
+
+        msg = '查询成功！'
+        return True, res, msg
     except Exception, e:
         print e.message
-        return None
+
+        msg = '数据库连接错误！'
+        return False, None, msg

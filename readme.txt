@@ -18,7 +18,10 @@ mysql安装：
 	4. 执行命令 net start mysql启动服务（删除服务：mysqld –remove mysql）
 
 进入mysql: mysql -uroot
+查看有哪些数据库：show databases;
+选择数据库：use databasename;
 新建mysql账户: CREATE USER 'dog'@'localhost' IDENTIFIED BY '123456'; 
+执行文件中的sql命令：source C:/github/Diamond-net-manager/sql/sql.txt;
 
 数据库设计：
 表1：入库出库表
